@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carteira-digital
+  namespace: carteira-digital
+  labels:
+    app: carteira-digital
+spec:
+  replicas: 2 # 2 instâncias rodando por padrão
+  selector:
+    matchLabels:
+      app: carteira-digital
+  template:
+    metadata:
+      labels:
+        app: carteira-digital
+    spec:
+      containers:
+        - name: carteira-digital
+          image: carteira-digital:latest
+          ports:
+            - containerPort: 3000
+
+          # Variáveis de ambiente vindas dos secrets
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: database-host
+            - name: DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: database-port
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: database-user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: database-password
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: database-name
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: redis-host
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: redis-port
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: jwt-secret
+            - name: AWS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: aws-endpoint
+            - name: SQS_QUEUE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: carteira-secrets
+                  key: sqs-queue-url
+
+          # Limites de recursos por instância
+          resources:
+            requests:
+              memory: '128Mi'
+              cpu: '100m'
+            limits:
+              memory: '256Mi'
+              cpu: '500m'
+
+          # Health checks — Kubernetes reinicia o container se falhar
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5

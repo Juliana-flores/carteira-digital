@@ -7,6 +7,7 @@ import { DataSource } from 'typeorm';
 import { RedisService } from 'src/redis/redis.service';
 import { Transaction as TransactionEntity } from './entities/transaction.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { SqsService } from './sqs/sqs.service';
 
 // Mocks — objetos falsos que simulam o comportamento real
 const mockWalletRepository = {
@@ -37,6 +38,10 @@ const mockRedisService = {
   expire: jest.fn(),
 };
 
+const mockSqsService = {
+  sendMessage: jest.fn(),
+};
+
 describe('WalletService', () => {
   let service: WalletService;
 
@@ -52,6 +57,7 @@ describe('WalletService', () => {
         { provide: getRepositoryToken(User), useValue: mockUserRepository },
         { provide: DataSource, useValue: mockDataSource },
         { provide: RedisService, useValue: mockRedisService },
+        { provide: SqsService, useValue: mockSqsService },
       ],
     }).compile();
 

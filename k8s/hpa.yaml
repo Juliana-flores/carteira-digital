@@ -1,0 +1,30 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: carteira-digital-hpa
+  namespace: carteira-digital
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: carteira-digital
+
+  minReplicas: 2 # mínimo de instâncias sempre rodando
+  maxReplicas: 10 # máximo em pico de tráfego
+
+  metrics:
+    # Escala por CPU
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70 # sobe instâncias se CPU > 70%
+
+    # Escala por memória
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80 # sobe instâncias se memória > 80%

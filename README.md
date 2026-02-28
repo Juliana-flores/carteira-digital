@@ -125,3 +125,31 @@ npm run test:cov
 ## 🔄 CI/CD
 
 O projeto usa **GitHub Actions** para rodar os testes automaticamente a cada push na branch `main`.
+
+## ☸️ Kubernetes
+
+O projeto inclui manifests Kubernetes prontos para deploy em produção (EKS na AWS).
+
+```bash
+# Criar namespace
+kubectl apply -f k8s/namespace.yaml
+
+# Criar secrets
+kubectl apply -f k8s/secrets.yaml
+
+# Deploy da aplicação
+kubectl apply -f k8s/deployment.yaml
+
+# Expor o serviço
+kubectl apply -f k8s/service.yaml
+
+# Configurar auto-scaling
+kubectl apply -f k8s/hpa.yaml
+
+# Verificar status
+kubectl get pods -n carteira-digital
+```
+
+### Auto-scaling
+
+O HPA (Horizontal Pod Autoscaler) escala automaticamente entre **2 e 10 instâncias** baseado em CPU e memória — garantindo que a aplicação aguente picos de tráfego sem intervenção manual.
