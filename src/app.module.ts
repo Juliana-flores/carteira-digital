@@ -5,6 +5,7 @@ import { WalletModule } from './wallet/wallet.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from './redis/redis.module';
+import { SqsModule } from './wallet/sqs/sqs.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RedisModule } from './redis/redis.module';
       }),
     }),
     RedisModule.forRoot(),
+    SqsModule.forRoot(),
     AuthModule,
     UsersModule,
     WalletModule,

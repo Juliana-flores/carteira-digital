@@ -14,6 +14,7 @@ import {
 } from './entities/transaction.entity';
 import { TransferDto } from './dto/transfer.dto';
 import { RedisService } from 'src/redis/redis.service';
+import { SqsService } from './sqs/sqs.service';
 
 @Injectable()
 export class WalletService {
@@ -29,6 +30,7 @@ export class WalletService {
 
     private dataSource: DataSource,
     private redisService: RedisService,
+    private sqsService: SqsService,
   ) {}
 
   async getBalance(userId: string) {
@@ -120,6 +122,14 @@ export class WalletService {
     if (Number(senderWallet.balance) < Number(transferDto.amount)) {
       throw new BadRequestException('Saldo insuficiente');
     }
+
+    // Publica na fila SQS antes de processar
+    await this.sqsService.sendMessage({
+      senderId,
+      receiverId: transferDto.receiverId,
+      amount: transferDto.amount,
+      timestamp: new Date().toISOString(),
+    });
 
     await this.dataSource.transaction(async (manager) => {
       senderWallet.balance =
