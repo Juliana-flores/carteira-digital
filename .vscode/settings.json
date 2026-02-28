@@ -1,0 +1,4 @@
+{
+  "git.diagnosticsCommitHook.enabled": true,
+  "git.blame.editorDecoration.enabled": true
+}
