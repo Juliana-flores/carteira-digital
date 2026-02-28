@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -96,4 +98,8 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+# carteira-digital
+
+> > > > > > > 05daf31ec83ceeaa978f170ad8ebcd97ac5dcbd3
