@@ -169,7 +169,7 @@ O HPA (Horizontal Pod Autoscaler) escala automaticamente entre **2 e 10 instânc
   <!-- ═══════════════════════════════ -->
   <rect x="370" y="75" width="160" height="50" rx="8" fill="#1A3C5E"/>
   <text x="450" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="white">📱 Cliente</text>
-  <text x="450" y="114" text-anchor="middle" font-size="11" fill="#AAC4E0">App Nomad</text>
+  <text x="450" y="114" text-anchor="middle" font-size="11" fill="#AAC4E0">App Teste</text>
 
   <!-- Arrow down -->
   <line x1="450" y1="125" x2="450" y2="148" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
